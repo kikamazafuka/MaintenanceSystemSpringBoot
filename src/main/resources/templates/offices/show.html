@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Show office</title>
+</head>
+<body>
+<p th:text="${'Name: ' + office.getName()}">VALUE</p>
+<p th:text="${'Address: ' + office.getAddress()}">VALUE</p>
+<p th:text="${'Difficulty: ' + office.getOfficeFirstDifficulty}">VALUE</p>
+
+<a th:href="@{/offices/{id}/edit(id=${office.getId()})}">Edit</a>
+<br/>
+<form th:method="DELETE" th:action="@{/offices/{id}(id=${office.getId()})}">
+  <input type="submit" value="Delete"/>
+</form>
+
+<hr/>
+Employees:
+<br/>
+<div th:if="${assignedEmployees}">
+    <div th:each="employee:${assignedEmployees}">
+        <div>
+            <a th:href="@{/employees/{id}(id=${employee.getId()})}"
+               th:text="${'Name: ' + employee.getName() + ' ' + employee.getSurname }">Value</a>
+        </div>
+    </div>
+</div>
+<hr/>
+Devices:
+<br/>
+<div th:if="${assignedDevices}">
+    <div th:each="device:${assignedDevices}">
+        <div>
+            <a th:href="@{/devices/{id}(id=${device.getId()})}"
+               th:text="${'Name: ' + device.getName()}">Value</a>
+        </div>
+    </div>
+</div>
+<br/>
+DevicesOffice:
+<br/>
+<div th:if="${deviceOffice}">
+    <div th:each="deviceOfficeJoinEntity:${deviceOffice}">
+        <div>
+            <a th:href="@{/devices/{id}(id=${deviceOfficeJoinEntity.getId()})}"
+               th:text="${'Name: ' + deviceOfficeJoinEntity.getDevice().getName()
+               + ' ' + deviceOfficeJoinEntity.getQuantity()
+               + ' ' + deviceOfficeJoinEntity.getFullSecondDifficulty}">Value</a>
+        </div>
+    </div>
+</div>
+<br/>
+
+Delete device list:
+<form th:method="PATCH" th:action="@{/devices/{id}/delete_device(id=${office.getId()})}">
+    <label for="office">Delete device for this office:</label>
+    <select th:object="${device}" th:field="*{id}" id="device">
+        <option th:each="device : ${assignedDevices}" th:value="${device.getId()}" th:text="${device.getName()}"></option>
+    </select>
+
+    <input type="submit" value="Delete device"/>
+</form>
+<br/>
+
+Assign device list:
+
+<div th:if="${devicesToAssign}">
+    <form th:method="PATCH" th:action="@{/devices/{id}/assign(id=${office.getId()})}">
+        <label for="office">Set office for this employee:</label>
+        <select th:object="${device}" th:field="*{id}" id="office">
+            <option th:each="device : ${devicesToAssign}" th:value="${device.getId()}" th:text="${device.getName()}"></option>
+        </select>
+<!--        <label for="quantity">Enter quantity</label>-->
+<!--        <input type="text" th:field="*{quantity}" id="quantity"/>-->
+<!--        <br/>-->
+        <input type="submit" value="Assign office"/>
+    </form>
+</div>
+
+<br/>
+<a th:href="@{/offices}">To office list</a>
+<br/>
+<a th:href="@{/}">Home</a>
+
+<br/>
+</body>
+</html>

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Offices</title>
+</head>
+<body>
+<div th:each="office : ${offices}">
+    <a th:href="@{/offices/{id}(id=${office.getId()})}"
+       th:text="${office.getName()}">office</a>
+</div>
+
+<br/>
+<hr/>
+<a href="/offices/new">Create new office</a>
+<br/>
+<a th:href="@{/}">Home</a>
+</body>
+</html>

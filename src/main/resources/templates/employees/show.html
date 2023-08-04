@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Employee</title>
+</head>
+<body>
+<p th:text="${'Name: ' + employee.getName()}">VALUE</p>
+<p th:text="${'Surname: ' + employee.getSurname()}">VALUE</p>
+
+<a th:href="@{/employees/{id}/edit(id=${employee.getId()})}">Edit</a>
+<br/>
+<form th:method="DELETE" th:action="@{/employees/{id}(id=${employee.getId()})}">
+    <input type="submit" value="Delete"/>
+</form>
+
+<hr/>
+Offices:
+<br/>
+<div th:if="${assignedOffices}">
+    <div th:each="office:${assignedOffices}">
+        <div>
+            <a th:href="@{/offices/{id}(id=${office.getId()})}"
+               th:text="${'Name: ' + office.getName() + ', ' + office.getAddress }">Value</a>
+        </div>
+    </div>
+</div>
+
+<br/>
+Delete office list:
+<form th:method="PATCH" th:action="@{/employees/{id}/delete_office(id=${employee.getId()})}">
+    <label for="office">Delete office for this employee:</label>
+    <select th:object="${office}" th:field="*{id}" id="office">
+        <option th:each="office : ${assignedOffices}" th:value="${office.getId()}" th:text="${office.getName()}+ ' ' + ${office.getAddress}"></option>
+    </select>
+
+    <input type="submit" value="Delete office"/>
+</form>
+<br/>
+Assign office list:
+
+<!--//TODO create if statement not to show list of offices if it is empty (variable officesToAssign)-->
+
+<div th:if="${officesToAssign}">
+    <form th:method="PATCH" th:action="@{/employees/{id}/assign(id=${employee.getId()})}">
+        <label for="office">Set office for this employee:</label>
+        <select th:object="${office}" th:field="*{id}" id="office">
+            <option th:each="office : ${officesToAssign}" th:value="${office.getId()}" th:text="${office.getName()}+ ' ' + ${office.getAddress}"></option>
+        </select>
+        <input type="submit" value="Assign office"/>
+    </form>
+</div>
+
+<br/>
+<a th:href="@{/employees}">To employees list</a>
+<br/>
+<a th:href="@{/}">Home</a>
+
+<br/>
+
+</body>
+</html>

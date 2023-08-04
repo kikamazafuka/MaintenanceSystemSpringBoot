@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit office</title>
+</head>
+<body>
+<form th:method="PATCH" th:action="@{/offices/{id}(id=${office.getId()})}" th:object="${office}">
+    <label for="name">Enter name: </label>
+    <input type="text" th:field="*{name}" id="name"/>
+    <div style="color:red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</div>
+    <br/>
+    <label for="address">Enter address: </label>
+    <input type="text" th:field="*{address}" id="address"/>
+    <div style="color:red" th:if="${#fields.hasErrors('address')}" th:errors="*{address}">Age Error</div>
+    <br/>
+    <input type="submit" value="Update!"/>
+</form>
+
+<br/>
+<a th:href="@{/offices}">To offices list</a>
+<br/>
+<a th:href="@{/}">Home</a>
+</body>
+</html>

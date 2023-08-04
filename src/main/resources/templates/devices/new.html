@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create device</title>
+</head>
+<body>
+<form th:method="POST" th:action="@{/devices}" th:object="${device}">
+    <label for="name">Enter name: </label>
+    <input type="text" th:field="*{name}" id="name"/>
+    <div style="color:red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</div>
+    <br/>
+    <label for="firstDifficulty">Enter first difficulty: </label>
+    <input type="text" th:field="*{firstDifficulty}" id="firstDifficulty"/>
+    <div style="color:red" th:if="${#fields.hasErrors('firstDifficulty')}" th:errors="*{firstDifficulty}">firstDifficulty Error</div>
+    <br/>
+    <label for="secondDifficulty">Enter second difficulty: </label>
+    <input type="text" th:field="*{secondDifficulty}" id="secondDifficulty"/>
+    <div style="color:red" th:if="${#fields.hasErrors('secondDifficulty')}" th:errors="*{secondDifficulty}">Date of birth Error</div>
+    <br/>
+    <input type="submit" value="Create!"/>
+</form>
+
+<br/>
+<a th:href="@{/devices}">To devices list</a>
+<br/>
+<a th:href="@{/}">Home</a>
+</body>
+</html>

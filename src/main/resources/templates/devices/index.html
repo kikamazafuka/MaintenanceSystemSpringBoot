@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Devices</title>
+</head>
+<body>
+<div th:each="device : ${devices}">
+    <a th:href="@{/devices/{id}(id=${device.getId()})}"
+       th:text="${device.getName()}">device</a>
+</div>
+
+<br/>
+<hr/>
+
+<a href="/devices/new">Create new device</a>
+<br/>
+<a th:href="@{/}">Home</a>
+</body>
+</html>
