@@ -1,7 +1,8 @@
 package de.artsem.springcourse.Project2Boot.controllers;
 
 import de.artsem.springcourse.Project2Boot.models.Device;
-import de.artsem.springcourse.Project2Boot.models.DeviceOfficeJoinEntity;
+//import de.artsem.springcourse.Project2Boot.models.DeviceOfficeJoinEntity;
+import de.artsem.springcourse.Project2Boot.models.DeviceOffice;
 import de.artsem.springcourse.Project2Boot.models.Employee;
 import de.artsem.springcourse.Project2Boot.models.Office;
 import de.artsem.springcourse.Project2Boot.services.DevicesService;
@@ -50,6 +51,28 @@ public class OfficesController {
         return "redirect:/offices";
     }
 
+//    @GetMapping("/{id}")
+//    public String show(@PathVariable("id") int id, Model model,
+//                       @ModelAttribute ("employee") Employee employee,
+//                       @ModelAttribute ("device") Device device){
+//        model.addAttribute("office", officesService.findById(id));
+//        Office office = officesService.findById(id);
+//        List<Employee> employees = office.getEmployeeList();
+//        List<Device> devices = office.getDeviceList();
+//
+//        //get list of devices that current office doesn't contain
+//        List<Device> devicesToSubtract = devicesService.findAll();
+//        devicesToSubtract.removeAll(office.getDeviceList());
+//        //TODO set quantity of devices on object
+//        List<DeviceOfficeJoinEntity> deviceOfficeJoinEntity = office.getDeviceOfficeJoinEntityList();
+//
+//        model.addAttribute("deviceOffice", deviceOfficeJoinEntity);
+//        model.addAttribute("assignedEmployees", employees);
+//        model.addAttribute("assignedDevices", devices);
+//        model.addAttribute("devicesToAssign", devicesToSubtract);
+//        return "offices/show";
+//    }
+
     @GetMapping("/{id}")
     public String show(@PathVariable("id") int id, Model model,
                        @ModelAttribute ("employee") Employee employee,
@@ -63,9 +86,9 @@ public class OfficesController {
         List<Device> devicesToSubtract = devicesService.findAll();
         devicesToSubtract.removeAll(office.getDeviceList());
         //TODO set quantity of devices on object
-        List<DeviceOfficeJoinEntity> deviceOfficeJoinEntity = office.getDeviceOfficeJoinEntityList();
+        List<DeviceOffice> deviceOfficeList = office.getDeviceOfficeList();
 
-        model.addAttribute("deviceOffice", deviceOfficeJoinEntity);
+        model.addAttribute("deviceOffice", deviceOfficeList);
         model.addAttribute("assignedEmployees", employees);
         model.addAttribute("assignedDevices", devices);
         model.addAttribute("devicesToAssign", devicesToSubtract);

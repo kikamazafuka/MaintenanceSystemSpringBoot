@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 
+
 import java.util.List;
 
 @Entity
@@ -29,8 +30,9 @@ public class Device {
     @ManyToMany(fetch = FetchType.EAGER, mappedBy = "deviceList")
     private List<Office> officeList;
 
-    @OneToMany(mappedBy = "device")
-    private List<DeviceOfficeJoinEntity> deviceOfficeJoinEntityList;
+//    @OneToMany(mappedBy = "device")
+//    private List<DeviceOfficeJoinEntity> deviceOfficeJoinEntityList;    field used with deviceOfficeJoinEntity
+
 
     public Device() {
     }
@@ -82,11 +84,12 @@ public class Device {
         this.officeList = officeList;
     }
 
-    public List<DeviceOfficeJoinEntity> getDeviceOfficeJoinEntityList() {
-        return deviceOfficeJoinEntityList;
-    }
+//    public List<DeviceOfficeJoinEntity> getDeviceOfficeJoinEntityList() {
+//        return deviceOfficeJoinEntityList;
+//    }
+//
+//    public void setDeviceOfficeJoinEntityList(List<DeviceOfficeJoinEntity> deviceOfficeJoinEntityList) {
+//        this.deviceOfficeJoinEntityList = deviceOfficeJoinEntityList;
+//    }
 
-    public void setDeviceOfficeJoinEntityList(List<DeviceOfficeJoinEntity> deviceOfficeJoinEntityList) {
-        this.deviceOfficeJoinEntityList = deviceOfficeJoinEntityList;
-    }
 }

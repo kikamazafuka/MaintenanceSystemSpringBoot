@@ -54,4 +54,12 @@ public class DeviceOffice {
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
+
+    public double getFullFirstDifficulty(){
+        return device.getFirstDifficulty()*quantity;
+    }
+
+    public double getFullSecondDifficulty(){
+        return device.getSecondDifficulty()*quantity;
+    }
 }

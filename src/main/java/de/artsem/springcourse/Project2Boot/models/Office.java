@@ -39,8 +39,11 @@ public class Office {
             @JoinColumn(name = "device_id"))
     private List<Device> deviceList;
 
+//    @OneToMany(mappedBy = "office")
+//    List<DeviceOfficeJoinEntity> deviceOfficeJoinEntityList;
+
     @OneToMany(mappedBy = "office")
-    List<DeviceOfficeJoinEntity> deviceOfficeJoinEntityList;
+    List<DeviceOffice> deviceOfficeList;
 
     public Office() {
     }
@@ -103,17 +106,25 @@ public class Office {
         this.deviceList = deviceList;
     }
 
-    public List<DeviceOfficeJoinEntity> getDeviceOfficeJoinEntityList() {
-        return deviceOfficeJoinEntityList;
+    public List<DeviceOffice> getDeviceOfficeList() {
+        return deviceOfficeList;
     }
 
-    public void setDeviceOfficeJoinEntityList(List<DeviceOfficeJoinEntity> deviceOfficeJoinEntityList) {
-        this.deviceOfficeJoinEntityList = deviceOfficeJoinEntityList;
+    public void setDeviceOfficeList(List<DeviceOffice> deviceOfficeList) {
+        this.deviceOfficeList = deviceOfficeList;
     }
 
+    //    public List<DeviceOfficeJoinEntity> getDeviceOfficeJoinEntityList() {
+//        return deviceOfficeJoinEntityList;
+//    }
+//
+//    public void setDeviceOfficeJoinEntityList(List<DeviceOfficeJoinEntity> deviceOfficeJoinEntityList) {
+//        this.deviceOfficeJoinEntityList = deviceOfficeJoinEntityList;
+//    }
+//
     public double getOfficeFirstDifficulty(){
         double fullOfficeDifficulty = 0;
-        for (DeviceOfficeJoinEntity deviceOffice : deviceOfficeJoinEntityList){
+        for (DeviceOffice deviceOffice : deviceOfficeList){
            fullOfficeDifficulty+= deviceOffice.getFullFirstDifficulty();
         }
         return fullOfficeDifficulty;
