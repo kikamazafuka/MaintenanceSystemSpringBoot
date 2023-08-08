@@ -21,12 +21,10 @@ import java.util.List;
 public class OfficesController {
 
     private final OfficesService officesService;
-    private final EmployeesService employeesService;
     private final DevicesService devicesService;
 
-    public OfficesController(OfficesService officesService, EmployeesService employeesService, DevicesService devicesService) {
+    public OfficesController(OfficesService officesService, DevicesService devicesService) {
         this.officesService = officesService;
-        this.employeesService = employeesService;
         this.devicesService = devicesService;
     }
 
@@ -51,32 +49,11 @@ public class OfficesController {
         return "redirect:/offices";
     }
 
-//    @GetMapping("/{id}")
-//    public String show(@PathVariable("id") int id, Model model,
-//                       @ModelAttribute ("employee") Employee employee,
-//                       @ModelAttribute ("device") Device device){
-//        model.addAttribute("office", officesService.findById(id));
-//        Office office = officesService.findById(id);
-//        List<Employee> employees = office.getEmployeeList();
-//        List<Device> devices = office.getDeviceList();
-//
-//        //get list of devices that current office doesn't contain
-//        List<Device> devicesToSubtract = devicesService.findAll();
-//        devicesToSubtract.removeAll(office.getDeviceList());
-//        //TODO set quantity of devices on object
-//        List<DeviceOfficeJoinEntity> deviceOfficeJoinEntity = office.getDeviceOfficeJoinEntityList();
-//
-//        model.addAttribute("deviceOffice", deviceOfficeJoinEntity);
-//        model.addAttribute("assignedEmployees", employees);
-//        model.addAttribute("assignedDevices", devices);
-//        model.addAttribute("devicesToAssign", devicesToSubtract);
-//        return "offices/show";
-//    }
-
     @GetMapping("/{id}")
     public String show(@PathVariable("id") int id, Model model,
                        @ModelAttribute ("employee") Employee employee,
-                       @ModelAttribute ("device") Device device){
+                       @ModelAttribute ("device") Device device,
+                       @ModelAttribute ("deviceOffice") DeviceOffice deviceOffice){
         model.addAttribute("office", officesService.findById(id));
         Office office = officesService.findById(id);
         List<Employee> employees = office.getEmployeeList();

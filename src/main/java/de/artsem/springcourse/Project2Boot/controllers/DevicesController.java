@@ -80,8 +80,9 @@ public class DevicesController {
     }
 
     @PatchMapping("/{id}/assign")
-    public String assignToOffice(@PathVariable("id") int id, @ModelAttribute("device") Device device){
-        deviceService.assign(id, device.getId());
+    public String assignToOffice(@PathVariable("id") int id, @ModelAttribute("device") Device device,
+                                 @RequestParam(required = false, name = "quantity") int quantity){
+        deviceService.assign(id, device.getId(), quantity);
         //TODO validate for existing office in current employee entity
         return "redirect:/offices/"+id;
     }
