@@ -1,9 +1,6 @@
 package de.artsem.springcourse.Project2Boot.controllers;
 
-import de.artsem.springcourse.Project2Boot.models.Book;
 import de.artsem.springcourse.Project2Boot.models.Device;
-import de.artsem.springcourse.Project2Boot.models.Employee;
-import de.artsem.springcourse.Project2Boot.models.Office;
 import de.artsem.springcourse.Project2Boot.services.DevicesService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +9,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 @Controller
 @RequestMapping("/devices")
@@ -48,12 +44,6 @@ public class DevicesController {
     @GetMapping("/{id}")
     public String show(@PathVariable("id") int id, Model model, @ModelAttribute ("device") Device device){
         model.addAttribute("device", deviceService.findById(id));
-
-//        Office office = officesService.findById(id);
-//        List<Employee> employees = office.getEmployeeList();
-//        List<Device> devices = office.getDeviceList();
-//        model.addAttribute("assignedEmployees", employees);
-//        model.addAttribute("assignedDevices", devices);
         return "devices/show";
     }
 

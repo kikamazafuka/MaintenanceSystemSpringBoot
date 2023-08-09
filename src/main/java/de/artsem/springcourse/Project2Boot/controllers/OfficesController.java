@@ -1,12 +1,10 @@
 package de.artsem.springcourse.Project2Boot.controllers;
 
 import de.artsem.springcourse.Project2Boot.models.Device;
-//import de.artsem.springcourse.Project2Boot.models.DeviceOfficeJoinEntity;
 import de.artsem.springcourse.Project2Boot.models.DeviceOffice;
 import de.artsem.springcourse.Project2Boot.models.Employee;
 import de.artsem.springcourse.Project2Boot.models.Office;
 import de.artsem.springcourse.Project2Boot.services.DevicesService;
-import de.artsem.springcourse.Project2Boot.services.EmployeesService;
 import de.artsem.springcourse.Project2Boot.services.OfficesService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
