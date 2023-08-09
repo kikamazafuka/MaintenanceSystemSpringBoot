@@ -130,6 +130,14 @@ public class Office {
         return fullOfficeDifficulty;
     }
 
+    public double getOfficeSecondDifficulty(){
+        double secondFullOfficeDifficulty = 0;
+        for (DeviceOffice deviceOffice : deviceOfficeList){
+            secondFullOfficeDifficulty += deviceOffice.getFullSecondDifficulty();
+        }
+        return secondFullOfficeDifficulty;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
