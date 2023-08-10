@@ -7,7 +7,8 @@
 <body>
 <p th:text="${'Name: ' + office.getName()}">VALUE</p>
 <p th:text="${'Address: ' + office.getAddress()}">VALUE</p>
-<!--<p th:text="${'Difficulty: ' + office.getOfficeFirstDifficulty}">VALUE</p>-->
+<p th:text="${'First Difficulty: ' + office.getOfficeFirstDifficulty}">VALUE</p>
+<p th:text="${'Second Difficulty: ' + office.getOfficeSecondDifficulty}">VALUE</p>
 
 <a th:href="@{/offices/{id}/edit(id=${office.getId()})}">Edit</a>
 <br/>
@@ -25,6 +26,9 @@ Employees:
                th:text="${'Name: ' + employee.getName() + ' ' + employee.getSurname }">Value</a>
         </div>
     </div>
+</div>
+<div th:if="${assignedEmployees.isEmpty()}">
+    <a href="/employees">All employees</a>
 </div>
 <hr/>
 Devices:
