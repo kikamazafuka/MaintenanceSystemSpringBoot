@@ -115,6 +115,14 @@ public class Employee {
         this.employeeOfficeJoinEntityList = employeeOfficeJoinEntityList;
     }
 
+    public double countWorkLoad(){
+        double result = 0;
+        for (Office office : officeList) {
+            result += office.getOfficeFirstDifficulty();
+        }
+        return result;
+    }
+
     @Override
     public String toString() {
         return "Employee{" +
