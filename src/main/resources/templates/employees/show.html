@@ -7,6 +7,7 @@
 <body>
 <p th:text="${'Name: ' + employee.getName()}">VALUE</p>
 <p th:text="${'Surname: ' + employee.getSurname()}">VALUE</p>
+<p th:text="${'First workload: ' + employee.countWorkLoad()}">VALUE</p>
 
 <a th:href="@{/employees/{id}/edit(id=${employee.getId()})}">Edit</a>
 <br/>
@@ -29,8 +30,8 @@ Offices:
 <br/>
 Delete office list:
 <form th:method="PATCH" th:action="@{/employees/{id}/delete_office(id=${employee.getId()})}">
-    <label for="office">Delete office for this employee:</label>
-    <select th:object="${office}" th:field="*{id}" id="office">
+    <label for="officeDelete">Delete office for this employee:</label>
+    <select th:object="${office}" th:field="*{id}" id="officeDelete">
         <option th:each="office : ${assignedOffices}" th:value="${office.getId()}" th:text="${office.getName()}+ ' ' + ${office.getAddress}"></option>
     </select>
 
@@ -43,8 +44,8 @@ Assign office list:
 
 <div th:if="${officesToAssign}">
     <form th:method="PATCH" th:action="@{/employees/{id}/assign(id=${employee.getId()})}">
-        <label for="office">Set office for this employee:</label>
-        <select th:object="${office}" th:field="*{id}" id="office">
+        <label for="officeAssign">Set office for this employee:</label>
+        <select th:object="${office}" th:field="*{id}" id="officeAssign">
             <option th:each="office : ${officesToAssign}" th:value="${office.getId()}" th:text="${office.getName()}+ ' ' + ${office.getAddress}"></option>
         </select>
         <input type="submit" value="Assign office"/>
