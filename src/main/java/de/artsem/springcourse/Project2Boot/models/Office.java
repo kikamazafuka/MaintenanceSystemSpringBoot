@@ -114,14 +114,6 @@ public class Office {
         this.deviceOfficeList = deviceOfficeList;
     }
 
-    //    public List<DeviceOfficeJoinEntity> getDeviceOfficeJoinEntityList() {
-//        return deviceOfficeJoinEntityList;
-//    }
-//
-//    public void setDeviceOfficeJoinEntityList(List<DeviceOfficeJoinEntity> deviceOfficeJoinEntityList) {
-//        this.deviceOfficeJoinEntityList = deviceOfficeJoinEntityList;
-//    }
-//
     public double getOfficeFirstDifficulty(){
         double fullOfficeDifficulty = 0;
         for (DeviceOffice deviceOffice : deviceOfficeList){
