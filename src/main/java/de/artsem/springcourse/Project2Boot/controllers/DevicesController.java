@@ -1,6 +1,7 @@
 package de.artsem.springcourse.Project2Boot.controllers;
 
 import de.artsem.springcourse.Project2Boot.models.Device;
+import de.artsem.springcourse.Project2Boot.services.DeviceOfficeService;
 import de.artsem.springcourse.Project2Boot.services.DevicesService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,10 +15,12 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/devices")
 public class DevicesController {
     private final DevicesService deviceService;
+    private final DeviceOfficeService deviceOfficeService;
 
     @Autowired
-    public DevicesController(DevicesService deviceService) {
+    public DevicesController(DevicesService deviceService, DeviceOfficeService deviceOfficeService) {
         this.deviceService = deviceService;
+        this.deviceOfficeService = deviceOfficeService;
     }
 
     @RequestMapping()
@@ -73,6 +76,14 @@ public class DevicesController {
     public String assignToOffice(@PathVariable("id") int id, @ModelAttribute("device") Device device,
                                  @RequestParam(required = false, name = "quantity") int quantity){
         deviceService.assign(id, device.getId(), quantity);
+        //TODO validate for existing office in current employee entity
+        return "redirect:/offices/"+id;
+    }
+
+    @PatchMapping("/{id}/set_quantity")
+    public String setDeviceQuantity(@PathVariable("id") int id, @ModelAttribute("device") Device device,
+                                 @RequestParam(required = false, name = "setQuantity") int quantity){
+        deviceOfficeService.setQuantity(id, device.getId(), quantity);
         //TODO validate for existing office in current employee entity
         return "redirect:/offices/"+id;
     }
