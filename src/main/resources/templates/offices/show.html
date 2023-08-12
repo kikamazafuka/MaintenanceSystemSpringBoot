@@ -12,11 +12,14 @@
 
 <a th:href="@{/offices/{id}/edit(id=${office.getId()})}">Edit</a>
 <br/>
-<form th:method="DELETE" th:action="@{/offices/{id}(id=${office.getId()})}">
-  <input type="submit" value="Delete"/>
-</form>
+<div>
+    <form th:method="DELETE" th:action="@{/offices/{id}(id=${office.getId()})}">
+      <input type="submit" value="Delete"/>
+    </form>
+</div>
 
 <hr/>
+
 Employees:
 <br/>
 <div th:if="${assignedEmployees}">
@@ -42,42 +45,50 @@ Devices:
     </div>
 </div>
 <br/>
-DevicesOffice:
-<br/>
-<div th:if="${deviceOffice}">
-    <div th:each="deviceOfficeJoinEntity:${deviceOffice}">
-        <div>
-            <a th:href="@{/devices/{id}(id=${deviceOfficeJoinEntity.getId()})}"
-               th:text="${'Name: ' + deviceOfficeJoinEntity.getDevice().getName()
-               + ' ' + deviceOfficeJoinEntity.getQuantity()
-               + ' ' + deviceOfficeJoinEntity.getFullSecondDifficulty}">Value</a>
-        </div>
-    </div>
+
+<h3>Existing Devices and Quantities</h3>
+<div th:each="deviceOffice : ${deviceOffice}">
+    <p>
+        Device: <span th:text="${deviceOffice.device.name}"></span>
+        Quantity: <span th:text="${deviceOffice.quantity}"></span>
+    </p>
 </div>
 <br/>
 
-Delete device list:
+<h3>Update Device Quantities</h3>
+<form th:method="PATCH" th:action="@{/devices/{id}/set_quantity(id=${office.id})}">
+    <select th:object="${device}" th:field="*{id}">
+        <option th:each="device : ${assignedDevices}"
+                th:value="${device.id}"
+                th:text="${device.name}"></option>
+    </select>
+    <label for="setQuantity">Enter quantity</label>
+    <input name="setQuantity" type="text" id="setQuantity"/>
+    <input type="submit" value="Update Quantity"/>
+</form>
+<br/>
+
+<h3>Delete device list:</h3>
 <form th:method="PATCH" th:action="@{/devices/{id}/delete_device(id=${office.getId()})}">
     <label for="office">Delete device for this office:</label>
     <select th:object="${device}" th:field="*{id}" id="office">
         <option th:each="device : ${assignedDevices}" th:value="${device.getId()}" th:text="${device.getName()}"></option>
     </select>
-
     <input type="submit" value="Delete device"/>
 </form>
 <br/>
 
-Assign device list:
-
+<h3>Assign device list:</h3>
 <div th:if="${devicesToAssign}">
     <form th:method="PATCH" th:action="@{/devices/{id}/assign(id=${office.getId()})}">
         <label for="device">Set device for this office:</label>
         <select th:object="${device}" th:field="*{id}" id="device">
-            <option th:each="device : ${devicesToAssign}" th:value="${device.getId()}" th:text="${device.getName()}"></option>
+            <option th:each="device : ${devicesToAssign}"
+                    th:value="${device.getId()}"
+                    th:text="${device.getName()}"></option>
         </select>
         <label for="quantity">Enter quantity</label>
         <input name="quantity" type="text" id="quantity"/>
-        <br/>
         <input type="submit" value="Assign office"/>
     </form>
 </div>
