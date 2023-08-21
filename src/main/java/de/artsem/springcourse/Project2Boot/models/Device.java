@@ -30,9 +30,8 @@ public class Device {
     @ManyToMany(fetch = FetchType.EAGER, mappedBy = "deviceList")
     private List<Office> officeList;
 
-//    @OneToMany(mappedBy = "device")
-//    private List<DeviceOfficeJoinEntity> deviceOfficeJoinEntityList;    field used with deviceOfficeJoinEntity
-
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "devices")
+    private List<SystemType> systemTypeList;
 
     public Device() {
     }
@@ -84,12 +83,12 @@ public class Device {
         this.officeList = officeList;
     }
 
-//    public List<DeviceOfficeJoinEntity> getDeviceOfficeJoinEntityList() {
-//        return deviceOfficeJoinEntityList;
-//    }
-//
-//    public void setDeviceOfficeJoinEntityList(List<DeviceOfficeJoinEntity> deviceOfficeJoinEntityList) {
-//        this.deviceOfficeJoinEntityList = deviceOfficeJoinEntityList;
-//    }
+    public List<SystemType> getSystemTypeList() {
+        return systemTypeList;
+    }
+
+    public void setSystemTypeList(List<SystemType> systemTypeList) {
+        this.systemTypeList = systemTypeList;
+    }
 
 }

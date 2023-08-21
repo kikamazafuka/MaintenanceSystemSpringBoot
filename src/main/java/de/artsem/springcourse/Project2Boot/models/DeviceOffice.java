@@ -17,6 +17,10 @@ public class DeviceOffice {
     @JoinColumn(name = "office_id")
     private Office office;
 
+    @ManyToOne
+    @JoinColumn(name = "system_type_id")
+    private SystemType systemType;
+
     @Column(name = "quantity")
     private int quantity;
 

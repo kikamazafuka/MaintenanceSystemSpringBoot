@@ -39,9 +39,6 @@ public class Office {
             @JoinColumn(name = "device_id"))
     private List<Device> deviceList;
 
-//    @OneToMany(mappedBy = "office")
-//    List<DeviceOfficeJoinEntity> deviceOfficeJoinEntityList;
-
     @OneToMany(mappedBy = "office")
     List<DeviceOffice> deviceOfficeList;
 
