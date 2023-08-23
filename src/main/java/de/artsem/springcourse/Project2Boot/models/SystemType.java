@@ -13,7 +13,7 @@ public class SystemType {
     private int id;
 
     @Column(name = "name")
-    private String systemTypeName;
+    private String name;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "device_office",
@@ -30,7 +30,7 @@ public class SystemType {
     }
     public SystemType(int id, String name) {
         this.id = id;
-        this.systemTypeName = name;
+        this.name = name;
     }
 
     public int getId() {
@@ -41,12 +41,12 @@ public class SystemType {
         this.id = id;
     }
 
-    public String getSystemTypeName() {
-        return systemTypeName;
+    public String getName() {
+        return name;
     }
 
-    public void setSystemTypeName(String systemTypeName) {
-        this.systemTypeName = systemTypeName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public List<Device> getDevices() {
