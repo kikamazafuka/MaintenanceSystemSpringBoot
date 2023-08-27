@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>System type</title>
+</head>
+<body>
+<div th:each="systemType : ${systemTypes}">
+    <a th:href="@{/system_types/{id}(id=${systemType.getId()})}"
+       th:text="${systemType.getName()}">office</a>
+</div>
+
+<br/>
+<hr/>
+<a href="/offices/new">Create new System type</a>
+<br/>
+<a th:href="@{/}">Home</a>
+</body>
+</html>
