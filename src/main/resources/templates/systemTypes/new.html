@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create new system type</title>
+</head>
+<body>
+<form th:method="POST" th:action="@{/system_types}" th:object="${systemType}">
+    <label for="name">Enter name: </label>
+    <input type="text" th:field="*{name}" id="name"/>
+    <div style="color:red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</div>
+    <br/>
+    <input type="submit" value="Create!"/>
+</form>
+
+<br/>
+<a th:href="@{/system_types}">To system types list</a>
+<br/>
+<a th:href="@{/}">Home</a>
+</body>
+</html>
