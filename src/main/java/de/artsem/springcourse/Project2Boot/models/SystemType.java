@@ -1,6 +1,7 @@
 package de.artsem.springcourse.Project2Boot.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 
 import java.util.List;
 
@@ -12,6 +13,7 @@ public class SystemType {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @NotEmpty(message = "System name should not be empty")
     @Column(name = "name")
     private String name;
 
