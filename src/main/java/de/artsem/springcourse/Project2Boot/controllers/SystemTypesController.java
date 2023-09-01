@@ -3,12 +3,11 @@ package de.artsem.springcourse.Project2Boot.controllers;
 
 import de.artsem.springcourse.Project2Boot.models.SystemType;
 import de.artsem.springcourse.Project2Boot.services.SystemTypesService;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -39,6 +38,16 @@ public class SystemTypesController {
     @GetMapping("/new")
     public String newSystemType (@ModelAttribute ("systemType") SystemType systemType){
         return "systemTypes/new";
+    }
+
+    @PostMapping
+    public String create(@ModelAttribute ("systemType") @Valid SystemType systemType,
+                         BindingResult bindingResult){
+        if (bindingResult.hasErrors()){
+            return "systemTypes/new";
+        }
+        systemTypesService.save(systemType);
+        return "redirect:/system_types";
     }
 
 }
