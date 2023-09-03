@@ -50,4 +50,10 @@ public class SystemTypesController {
         return "redirect:/system_types";
     }
 
+    @DeleteMapping("/{id}")
+    public String delete(@PathVariable("id") int id) {
+        systemTypesService.delete(id);
+        return "redirect:/system_type";
+    }
+
 }
