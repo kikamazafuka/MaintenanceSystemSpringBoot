@@ -24,4 +24,9 @@ public class SystemTypesService {
     public void save (SystemType systemType){
         systemTypesRepository.save(systemType);
     }
+
+    @Transactional
+    public void delete(int id) {
+        systemTypesRepository.deleteById(id);
+    }
 }
