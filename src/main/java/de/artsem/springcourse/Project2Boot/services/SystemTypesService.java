@@ -20,6 +20,10 @@ public class SystemTypesService {
         return systemTypesRepository.findAll();
     }
 
+    public SystemType findById(int id){
+        return systemTypesRepository.findById(id).orElse(null);
+    }
+
     @Transactional
     public void save (SystemType systemType){
         systemTypesRepository.save(systemType);
