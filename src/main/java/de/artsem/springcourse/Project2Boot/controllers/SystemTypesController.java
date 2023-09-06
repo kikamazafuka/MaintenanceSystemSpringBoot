@@ -31,8 +31,9 @@ public class SystemTypesController {
     }
 
     @GetMapping("/{id}")
-    public String show (@PathVariable ("id") int id){
-        return "systemTypes/index";
+    public String show (@PathVariable ("id") int id, Model model){
+        model.addAttribute("systemType",systemTypesService.findById(id));
+        return "systemTypes/show";
     }
 
     @GetMapping("/new")
@@ -53,7 +54,7 @@ public class SystemTypesController {
     @DeleteMapping("/{id}")
     public String delete(@PathVariable("id") int id) {
         systemTypesService.delete(id);
-        return "redirect:/system_type";
+        return "redirect:/system_types";
     }
 
 }
