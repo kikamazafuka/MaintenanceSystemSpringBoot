@@ -66,4 +66,11 @@ public class SystemType {
     public void setDeviceOfficeList(List<DeviceOffice> deviceOfficeList) {
         this.deviceOfficeList = deviceOfficeList;
     }
+
+    @Override
+    public String toString() {
+        return "SystemType{" +
+                "name='" + name + '\'' +
+                '}';
+    }
 }
