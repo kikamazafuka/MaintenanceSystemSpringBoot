@@ -66,4 +66,12 @@ public class DeviceOffice {
     public double getFullSecondDifficulty(){
         return device.getSecondDifficulty()*quantity;
     }
+
+    public SystemType getSystemType() {
+        return systemType;
+    }
+
+    public void setSystemType(SystemType systemType) {
+        this.systemType = systemType;
+    }
 }
