@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Office</title>
+</head>
+<body>
+<p th:text="${'Name: ' + office.getName()}">VALUE</p>
+<p th:text="${'Address: ' + office.getAddress()}">VALUE</p>
+<p th:text="${'First Difficulty: ' + office.getOfficeFirstDifficulty}">VALUE</p>
+<p th:text="${'Second Difficulty: ' + office.getOfficeSecondDifficulty}">VALUE</p>
+
+
+<a th:href="@{/offices/{id}/edit(id=${office.getId()})}">Edit</a>
+<br/>
+<div>
+  <form th:method="DELETE" th:action="@{/offices/{id}(id=${office.getId()})}">
+    <input type="submit" value="Delete"/>
+  </form>
+</div>
+
+<hr/>
+
+Employees:
+<br/>
+<div th:if="${assignedEmployees}">
+  <div th:each="employee:${assignedEmployees}">
+    <div>
+      <a th:href="@{/employees/{id}(id=${employee.getId()})}"
+         th:text="${'Name: ' + employee.getName() + ' ' + employee.getSurname }">Value</a>
+    </div>
+  </div>
+</div>
+<div th:if="${assignedEmployees.isEmpty()}">
+  <a href="/employees">All employees</a>
+</div>
+<hr/>
+<h3>System Types</h3>
+<div th:each="systemType : ${systemTypeList}">
+  <p>
+    System type: <span th:text="${systemType.name}"></span>
+  </p>
+</div>
+<br/>
+<h3>Devices:</h3>
+<br/>
+<div th:if="${assignedDevices}">
+  <div th:each="device:${assignedDevices}">
+    <div>
+      <a th:href="@{/devices/{id}(id=${device.getId()})}"
+         th:text="${'Name: ' + device.getName()}">Value</a>
+    </div>
+  </div>
+</div>
+
+<br/>
+
+<a th:href="@{/offices}">To office list</a>
+<br/>
+<a th:href="@{/}">Home</a>
+
+<br/>
+</body>
+</html>
