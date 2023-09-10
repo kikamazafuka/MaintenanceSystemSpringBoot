@@ -1,7 +1,12 @@
 package de.artsem.springcourse.Project2Boot.controllers;
 
 
+import de.artsem.springcourse.Project2Boot.models.Device;
+import de.artsem.springcourse.Project2Boot.models.DeviceOffice;
+import de.artsem.springcourse.Project2Boot.models.Office;
 import de.artsem.springcourse.Project2Boot.models.SystemType;
+import de.artsem.springcourse.Project2Boot.services.DeviceOfficeService;
+import de.artsem.springcourse.Project2Boot.services.OfficesService;
 import de.artsem.springcourse.Project2Boot.services.SystemTypesService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
@@ -17,9 +22,13 @@ public class SystemTypesController {
 
 
     private final SystemTypesService systemTypesService;
+    private final OfficesService officesService;
+    private final DeviceOfficeService deviceOfficeService;
 
-    public SystemTypesController(SystemTypesService systemTypesService) {
+    public SystemTypesController(SystemTypesService systemTypesService, OfficesService officesService, DeviceOfficeService deviceOfficeService) {
         this.systemTypesService = systemTypesService;
+        this.officesService = officesService;
+        this.deviceOfficeService = deviceOfficeService;
     }
 
 
@@ -55,6 +64,20 @@ public class SystemTypesController {
     public String delete(@PathVariable("id") int id) {
         systemTypesService.delete(id);
         return "redirect:/system_types";
+    }
+
+    @GetMapping("/{id_system_type}/{id_office}/edit")
+    public String editDevicesInSystemType(@PathVariable ("id_system_type") int systemTypeId,
+                                          @PathVariable ("id_office") int officeId, Model model){
+        SystemType systemType = systemTypesService.findById(systemTypeId);
+        Office office = officesService.findById(officeId);
+
+        List<DeviceOffice> deviceOffice = deviceOfficeService.getDevicesInOfficeAndSystemType(officeId, systemTypeId);
+        model.addAttribute("systemType", systemType);
+        model.addAttribute("office", office);
+        model.addAttribute("deviceOffice", deviceOffice);
+
+        return "offices/system_type_edit";
     }
 
 }
