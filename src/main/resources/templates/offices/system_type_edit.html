@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit System type</title>
+</head>
+<body>
+<p th:text="${'Name: ' + systemType.getName()}">VALUE</p>
+<p th:text="${'Name: ' + office.getName()}">VALUE</p>
+
+<h3>Existing Devices and Quantities</h3>
+<div th:each="deviceOffice : ${deviceOffice}">
+    <p>
+        Device: <span th:text="${deviceOffice.device.name}"></span>
+        Quantity: <span th:text="${deviceOffice.quantity}"></span>
+    </p>
+</div>
+
+</body>
+</html>
