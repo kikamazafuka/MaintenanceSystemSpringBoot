@@ -1,0 +1,18 @@
+.bordered-table {
+    border-collapse: collapse;
+    width: max-content;
+}
+
+.bordered-table th, .bordered-table td {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+.bordered-table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.bordered-table th {
+    background-color: #e2e2e2;
+}
