@@ -1,20 +1,40 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <title>Edit System type</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}" />
+
 </head>
 <body>
 <p th:text="${'Name: ' + systemType.getName()}">VALUE</p>
 <p th:text="${'Name: ' + office.getName()}">VALUE</p>
 
+</br>
+
 <h3>Existing Devices and Quantities</h3>
-<div th:each="deviceOffice : ${deviceOffice}">
-    <p>
-        Device: <span th:text="${deviceOffice.device.name}"></span>
-        Quantity: <span th:text="${deviceOffice.quantity}"></span>
-    </p>
-</div>
+<table class="bordered-table">
+    <thead>
+    <tr>
+        <th>Device</th>
+        <th>Quantity</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="deviceOffice : ${deviceOffice}">
+        <td th:text="${deviceOffice.device.name}"></td>
+        <td th:text="${deviceOffice.quantity}"></td>
+    </tr>
+    </tbody>
+</table>
+
+<br/>
+<a th:href="@{/offices/{id}(id=${office.getId()})}"
+   th:text="Back">office</a>
+<br/>
+<a th:href="@{/offices}">To office list</a>
+<br/>
+<a th:href="@{/}">Home</a>
 
 </body>
 </html>
