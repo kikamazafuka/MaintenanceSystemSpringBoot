@@ -38,19 +38,9 @@ Employees:
 <h3>System Types</h3>
 <div th:each="systemType : ${systemTypeList}">
   <p>
-    System type: <span th:text="${systemType.name}"></span>
+    <a th:href="@{/system_types/{id_system_type}/{id_office}/edit(id_system_type=${systemType.getId()}, id_office=${office.getId()})}"
+       th:text="${systemType.getName()}">Value</a>
   </p>
-</div>
-<br/>
-<h3>Devices:</h3>
-<br/>
-<div th:if="${assignedDevices}">
-  <div th:each="device:${assignedDevices}">
-    <div>
-      <a th:href="@{/devices/{id}(id=${device.getId()})}"
-         th:text="${'Name: ' + device.getName()}">Value</a>
-    </div>
-  </div>
 </div>
 
 <br/>
