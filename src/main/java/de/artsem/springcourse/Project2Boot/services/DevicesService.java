@@ -68,7 +68,7 @@ public class DevicesService {
     }
 
     @Transactional
-    public void delete (int deviceId , int officeId ){
+    public void delete (int deviceId , int officeId, int systemTypeId ){
         Optional<Office> optionalOffice = officesRepository.findById(officeId);
         Optional<Device> optionalDevice = devicesRepository.findById(deviceId);
         if (optionalDevice.isPresent() && optionalOffice.isPresent()){
