@@ -7,7 +7,9 @@
 
 </head>
 <body>
+<h3>
 <p th:text="${'Name: ' + systemType.getName()}">System type</p>
+</h3>
 <p th:text="${'Name: ' + office.getName()}">office</p>
 
 </br>
@@ -30,20 +32,18 @@
 
 <br/>
 
-<h3>Update Device Quantities</h3>
-<form th:method="PATCH" th:action="@{/devices/{id_system_type}/{id_office}/set_quantity(id_system_type=${systemType.getId()}, id_office=${office.id})}">
+<h3>Update Device Quantity</h3>
+<form th:method="PATCH"
+      th:action="@{/devices/{id_system_type}/{id_office}/set_quantity(id_system_type=${systemType.getId()},
+      id_office=${office.id})}">
      <select th:object="${device}" th:field="*{id}">
-         <!--
          <option th:each="deviceOffice : ${deviceOffice}"
                  th:value="${deviceOffice.device.id}"
                  th:text="${deviceOffice.device.name}"></option>
-                 -->
      </select>
-    <!--
      <label for="setQuantity">Enter quantity</label>
      <input name="setQuantity" type="text" id="setQuantity"/>
      <input type="submit" value="Update Quantity"/>
-      -->
  </form>
 
 <br/>
