@@ -15,4 +15,6 @@ public interface DeviceOfficeRepository extends JpaRepository<DeviceOffice, Inte
     DeviceOffice findByOfficeAndDevice(Office office, Device device);
 
     List<DeviceOffice> findByOfficeAndSystemType(Office office, SystemType systemType);
+
+    DeviceOffice findByOfficeAndDeviceAndSystemType(Office office, Device device, SystemType systemType);
 }
