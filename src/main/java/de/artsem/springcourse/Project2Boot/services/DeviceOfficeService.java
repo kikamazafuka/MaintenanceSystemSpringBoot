@@ -30,12 +30,14 @@ public class DeviceOfficeService {
     }
 
     @Transactional
-    public void setQuantity(int officeId, int deviceId, int quantity){
+    public void setQuantity(int officeId, int systemTypeId, int deviceId, int quantity){
         Optional<Device> optionalDevice = devicesRepository.findById(deviceId);
         Optional<Office> optionalOffice = officesRepository.findById(officeId);
-        if (optionalDevice.isPresent() && optionalOffice.isPresent()){
+        Optional<SystemType> optionalSystemType = systemTypesRepository.findById(systemTypeId);
+        if (optionalDevice.isPresent() && optionalOffice.isPresent() && optionalSystemType.isPresent()){
             DeviceOffice deviceOffice = deviceOfficeRepository
-                    .findByOfficeAndDevice(optionalOffice.get(), optionalDevice.get());
+                    .findByOfficeAndDeviceAndSystemType(optionalOffice.get(),
+                            optionalDevice.get(), optionalSystemType.get());
             deviceOffice.setQuantity(quantity);
             deviceOfficeRepository.save(deviceOffice);
         }
