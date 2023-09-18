@@ -1,6 +1,7 @@
 package de.artsem.springcourse.Project2Boot.controllers;
 
 import de.artsem.springcourse.Project2Boot.models.Device;
+import de.artsem.springcourse.Project2Boot.models.SystemType;
 import de.artsem.springcourse.Project2Boot.services.DeviceOfficeService;
 import de.artsem.springcourse.Project2Boot.services.DevicesService;
 import jakarta.validation.Valid;
@@ -80,17 +81,20 @@ public class DevicesController {
         return "redirect:/offices/"+id;
     }
 
-    @PatchMapping("/{id}/set_quantity")
-    public String setDeviceQuantity(@PathVariable("id") int id, @ModelAttribute("device") Device device,
-                                 @RequestParam(required = false, name = "setQuantity") int quantity){
-        deviceOfficeService.setQuantity(id, device.getId(), quantity);
+    @PatchMapping("/{id_system_type}/{id_office}/set_quantity")
+    public String setDeviceQuantity(@PathVariable("id_system_type") int systemTypeId,
+                                    @PathVariable("id_office") int officeId,
+                                    @ModelAttribute("device") Device device,
+                                    @RequestParam(required = false, name = "setQuantity") int quantity){
+        deviceOfficeService.setQuantity(officeId, systemTypeId, device.getId(), quantity);
         //TODO validate for existing office in current employee entity
-        return "redirect:/offices/"+id;
+        return "redirect:/system_types/"+systemTypeId+"/"+officeId+"/edit";
     }
 
     @PatchMapping("/{id}/delete_device")
-    public String deleteOffice(@PathVariable("id") int id, @ModelAttribute("device") Device device){
-        deviceService.delete(device.getId(), id);
+    public String deleteOffice(@PathVariable("id") int id, @ModelAttribute("device") Device device,
+                               @ModelAttribute ("systemType")SystemType systemType){
+        deviceService.delete(device.getId(), id, systemType.getId());
         return "redirect:/offices/"+id;
     }
 }
