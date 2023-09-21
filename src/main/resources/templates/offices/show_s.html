@@ -1,54 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Office</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Office</title>
+  <link rel="stylesheet" th:href="@{/css/offices_show.css}">
 </head>
 <body>
-<p th:text="${'Name: ' + office.getName()}">VALUE</p>
-<p th:text="${'Address: ' + office.getAddress()}">VALUE</p>
-<p th:text="${'First Difficulty: ' + office.getOfficeFirstDifficulty}">VALUE</p>
-<p th:text="${'Second Difficulty: ' + office.getOfficeSecondDifficulty}">VALUE</p>
 
+<div class="container">
+  <h2 class="page-title">Office Information</h2>
 
-<a th:href="@{/offices/{id}/edit(id=${office.getId()})}">Edit</a>
-<br/>
-<div>
-  <form th:method="DELETE" th:action="@{/offices/{id}(id=${office.getId()})}">
-    <input type="submit" value="Delete"/>
-  </form>
-</div>
+  <div class="info-section">
+    <p class="info-label">Name:</p>
+    <p class="info-value" th:text="${office.getName()}">Office Name</p>
+  </div>
 
-<hr/>
+  <div class="info-section">
+    <p class="info-label">Address:</p>
+    <p class="info-value" th:text="${office.getAddress()}">Office Address</p>
+  </div>
 
-Employees:
-<br/>
-<div th:if="${assignedEmployees}">
-  <div th:each="employee:${assignedEmployees}">
-    <div>
-      <a th:href="@{/employees/{id}(id=${employee.getId()})}"
-         th:text="${'Name: ' + employee.getName() + ' ' + employee.getSurname }">Value</a>
+  <div class="info-section">
+    <p class="info-label">First Difficulty:</p>
+    <p class="info-value" th:text="${office.getOfficeFirstDifficulty()}">First Difficulty Value</p>
+  </div>
+
+  <div class="info-section">
+    <p class="info-label">Second Difficulty:</p>
+    <p class="info-value" th:text="${office.getOfficeSecondDifficulty()}">Second Difficulty Value</p>
+  </div>
+
+  <div class="actions">
+    <a th:href="@{/offices/{id}/edit(id=${office.getId()})}" class="action-button">Edit</a>
+    <form th:method="DELETE" th:action="@{/offices/{id}(id=${office.getId()})}" class="delete-form">
+      <input type="submit" value="Delete" class="action-button delete-button"/>
+    </form>
+  </div>
+
+  <hr class="divider"/>
+
+  <h3 class="section-title">Employees:</h3>
+
+  <div th:if="${assignedEmployees}" class="employee-list">
+    <div th:each="employee:${assignedEmployees}" class="employee-item">
+      <a th:href="@{/employees/{id}(id=${employee.getId()})}" class="employee-link">
+        <p class="employee-name" th:text="${employee.getName() + ' ' + employee.getSurname()}">Employee Name</p>
+      </a>
     </div>
   </div>
-</div>
-<div th:if="${assignedEmployees.isEmpty()}">
-  <a href="/employees">All employees</a>
-</div>
-<hr/>
-<h3>System Types</h3>
-<div th:each="systemType : ${systemTypeList}">
-  <p>
-    <a th:href="@{/system_types/{id_system_type}/{id_office}/edit(id_system_type=${systemType.getId()}, id_office=${office.getId()})}"
-       th:text="${systemType.getName()}">Value</a>
-  </p>
+
+  <div th:if="${assignedEmployees.isEmpty()}" class="all-employees-link">
+    <a href="/employees">All Employees</a>
+  </div>
+
+  <hr class="divider"/>
+
+  <h3 class="section-title">System Types</h3>
+
+  <div th:each="systemType : ${systemTypeList}" class="system-type-item">
+    <a th:href="@{/system_types/{id_system_type}/{id_office}/edit(id_system_type=${systemType.getId()}, id_office=${office.getId()})}" class="system-type-link">
+      <p class="system-type-name" th:text="${systemType.getName()}">System Type Name</p>
+    </a>
+  </div>
+
+  <a th:href="@{/offices}" class="return-link">Back to Office List</a>
+  <a th:href="@{/}" class="home-link">Home</a>
 </div>
 
-<br/>
-
-<a th:href="@{/offices}">To office list</a>
-<br/>
-<a th:href="@{/}">Home</a>
-
-<br/>
 </body>
 </html>
