@@ -48,6 +48,24 @@
 
 <br/>
 
+<h3>Assign device list:</h3>
+
+<div th:if="${devicesToAssign}">
+    <form th:method="PATCH" th:action="@{/devices/{id_system_type}/{id_office}/assign(id_system_type=${systemType.getId()},
+        id_office=${office.id})}">
+        <label for="device">Set device for this office:</label>
+        <select th:object="${device}" th:field="*{id}" id="device">
+            <option th:each="device : ${devicesToAssign}"
+                    th:value="${device.getId()}"
+                    th:text="${device.getName()}"></option>
+        </select>
+        <label for="quantity">Enter quantity</label>
+        <input name="quantity" type="text" id="quantity"/>
+        <input type="submit" value="Assign office"/>
+    </form>
+</div>
+
+
 <a th:href="@{/offices/{id}(id=${office.getId()})}"
    th:text="Back">office</a>
 <br/>
