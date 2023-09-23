@@ -1,11 +1,9 @@
 package de.artsem.springcourse.Project2Boot.controllers;
 
-import de.artsem.springcourse.Project2Boot.models.Device;
-import de.artsem.springcourse.Project2Boot.models.DeviceOffice;
-import de.artsem.springcourse.Project2Boot.models.Employee;
-import de.artsem.springcourse.Project2Boot.models.Office;
+import de.artsem.springcourse.Project2Boot.models.*;
 import de.artsem.springcourse.Project2Boot.services.DevicesService;
 import de.artsem.springcourse.Project2Boot.services.OfficesService;
+import de.artsem.springcourse.Project2Boot.services.SystemTypesService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,10 +18,13 @@ public class OfficesController {
 
     private final OfficesService officesService;
     private final DevicesService devicesService;
+    private final SystemTypesService systemTypesService;
 
-    public OfficesController(OfficesService officesService, DevicesService devicesService) {
+    public OfficesController(OfficesService officesService, DevicesService devicesService,
+                             SystemTypesService systemTypesService) {
         this.officesService = officesService;
         this.devicesService = devicesService;
+        this.systemTypesService = systemTypesService;
     }
 
     @GetMapping
@@ -51,23 +52,23 @@ public class OfficesController {
     public String show(@PathVariable("id") int id, Model model,
                        @ModelAttribute ("employee") Employee employee,
                        @ModelAttribute ("device") Device device,
-                       @ModelAttribute ("deviceOffice") DeviceOffice deviceOffice){
+                       @ModelAttribute ("deviceOffice") DeviceOffice deviceOffice,
+                       @ModelAttribute ("systemType") SystemType systemType){
         model.addAttribute("office", officesService.findById(id));
         Office office = officesService.findById(id);
-        List<Employee> employees = office.getEmployeeList();
+       // List<Employee> employees = office.getEmployeeList();
         List<Device> devices = office.getDeviceList();
-
+        List<SystemType> systemTypeList = systemTypesService.findAll();
         //get list of devices that current office doesn't contain
         List<Device> devicesToSubtract = devicesService.findAll();
         devicesToSubtract.removeAll(office.getDeviceList());
-        //TODO set quantity of devices on object
         List<DeviceOffice> deviceOfficeList = office.getDeviceOfficeList();
-
         model.addAttribute("deviceOffice", deviceOfficeList);
-        model.addAttribute("assignedEmployees", employees);
-        model.addAttribute("assignedDevices", devices);
+        model.addAttribute("assignedEmployees", office.getEmployeeList());
+        model.addAttribute("assignedDevices", office.getDeviceList());
         model.addAttribute("devicesToAssign", devicesToSubtract);
-        return "offices/show";
+        model.addAttribute("systemTypeList", systemTypeList);
+        return "offices/show_s";
     }
 
     @GetMapping("/{id}/edit")
