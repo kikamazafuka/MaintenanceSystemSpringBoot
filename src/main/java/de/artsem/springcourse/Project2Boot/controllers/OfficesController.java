@@ -5,6 +5,7 @@ import de.artsem.springcourse.Project2Boot.services.DevicesService;
 import de.artsem.springcourse.Project2Boot.services.OfficesService;
 import de.artsem.springcourse.Project2Boot.services.SystemTypesService;
 import jakarta.validation.Valid;
+import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -33,6 +34,12 @@ public class OfficesController {
         return  "offices/index";
     }
 
+    @GetMapping("/sorted_by_name")
+    public String indexSortByName(@RequestParam("order") String order, Model model){
+        model.addAttribute("offices", officesService.findAllOfficesWithSorting("name", order));
+        return "offices/index";
+    }
+
     @GetMapping("/new")
     public String newOffice(@ModelAttribute ("office") Office office){
         return "offices/new";
@@ -56,9 +63,6 @@ public class OfficesController {
                        @ModelAttribute ("systemType") SystemType systemType){
         model.addAttribute("office", officesService.findById(id));
         Office office = officesService.findById(id);
-       // List<Employee> employees = office.getEmployeeList();
-        List<Device> devices = office.getDeviceList();
-        List<SystemType> systemTypeList = systemTypesService.findAll();
         //get list of devices that current office doesn't contain
         List<Device> devicesToSubtract = devicesService.findAll();
         devicesToSubtract.removeAll(office.getDeviceList());
@@ -67,7 +71,7 @@ public class OfficesController {
         model.addAttribute("assignedEmployees", office.getEmployeeList());
         model.addAttribute("assignedDevices", office.getDeviceList());
         model.addAttribute("devicesToAssign", devicesToSubtract);
-        model.addAttribute("systemTypeList", systemTypeList);
+        model.addAttribute("systemTypeList", systemTypesService.findAll());
         return "offices/show_s";
     }
 
