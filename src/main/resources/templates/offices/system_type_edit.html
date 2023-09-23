@@ -3,75 +3,279 @@
 <head>
     <meta charset="UTF-8">
     <title>Edit System type</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}" />
-
+    <link rel="stylesheet" type="text/css" th:href="@{/css/system_type_edit.css}" />
 </head>
 <body>
-<h3>
-<p th:text="${'Name: ' + systemType.getName()}">System type</p>
-</h3>
-<p th:text="${'Name: ' + office.getName()}">office</p>
+<div class="container">
+    <h3 class="page-title">
+        <p th:text="${'Name: ' + systemType.getName()}">System type</p>
+    </h3>
+    <p class="page-title" th:text="${'Name: ' + office.getName()}">office</p>
 
-</br>
+    <div class="info-section">
+        <h3 class="section-title">Existing Devices and Quantities</h3>
+        <table class="bordered-table">
+            <thead>
+            <tr>
+                <th>Device</th>
+                <th>Quantity</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="deviceOffice : ${deviceOffice}" class="employee-item">
+                <td th:text="${deviceOffice.device.name}"></td>
+                <td th:text="${deviceOffice.quantity}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 
-<h3>Existing Devices and Quantities</h3>
-<table class="bordered-table">
-    <thead>
-    <tr>
-        <th>Device</th>
-        <th>Quantity</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="deviceOffice : ${deviceOffice}">
-        <td th:text="${deviceOffice.device.name}"></td>
-        <td th:text="${deviceOffice.quantity}"></td>
-    </tr>
-    </tbody>
-</table>
-
-<br/>
-
-<h3>Update Device Quantity</h3>
-<form th:method="PATCH"
-      th:action="@{/devices/{id_system_type}/{id_office}/set_quantity(id_system_type=${systemType.getId()},
-      id_office=${office.id})}">
-     <select th:object="${device}" th:field="*{id}">
-         <option th:each="deviceOffice : ${deviceOffice}"
-                 th:value="${deviceOffice.device.id}"
-                 th:text="${deviceOffice.device.name}"></option>
-     </select>
-     <label for="setQuantity">Enter quantity</label>
-     <input name="setQuantity" type="text" id="setQuantity"/>
-     <input type="submit" value="Update Quantity"/>
- </form>
-
-<br/>
-
-<h3>Assign device list:</h3>
-
-<div th:if="${devicesToAssign}">
-    <form th:method="PATCH" th:action="@{/devices/{id_system_type}/{id_office}/assign(id_system_type=${systemType.getId()},
-        id_office=${office.id})}">
-        <label for="device">Set device for this office:</label>
-        <select th:object="${device}" th:field="*{id}" id="device">
-            <option th:each="device : ${devicesToAssign}"
-                    th:value="${device.getId()}"
-                    th:text="${device.getName()}"></option>
-        </select>
-        <label for="quantity">Enter quantity</label>
-        <input name="quantity" type="text" id="quantity"/>
-        <input type="submit" value="Assign office"/>
-    </form>
+    <a th:href="@{/offices/{id}(id=${office.getId()})}" th:text="Back" class="return-link">office</a><br>
+    <a th:href="@{/offices}" class="return-link">To Office List</a><br>
+    <a th:href="@{/}" class="return-link">Home</a>
 </div>
 
+<div class="container right-container">
+    <div class="info-section">
+        <h3 class="section-title">Update Device Quantity</h3>
+        <form class="actions" th:method="PATCH"
+              th:action="@{/devices/{id_system_type}/{id_office}/set_quantity(id_system_type=${systemType.getId()},
+              id_office=${office.id})}">
+            <select th:object="${device}" th:field="*{id}" class="employee-list">
+                <option th:each="deviceOffice : ${deviceOffice}"
+                        th:value="${deviceOffice.device.id}"
+                        th:text="${deviceOffice.device.name}"></option>
+            </select>
+            <label class="info-label" for="setQuantity">Enter quantity</label>
+            <input name="setQuantity" type="text" id="setQuantity" class="info-value"/>
+            <div class="actions">
+                <input type="submit" value="Update Quantity" class="action-button"/>
+            </div>
+        </form>
+    </div>
 
-<a th:href="@{/offices/{id}(id=${office.getId()})}"
-   th:text="Back">office</a>
-<br/>
-<a th:href="@{/offices}">To office list</a>
-<br/>
-<a th:href="@{/}">Home</a>
+    <div class="info-section">
+        <h3 class="section-title">Assign Device</h3>
+        <div th:if="${devicesToAssign}">
+            <form class="actions" th:method="PATCH" th:action="@{/devices/{id_system_type}/{id_office}/assign(id_system_type=${systemType.getId()},
+             id_office=${office.id})}">
+                <label class="info-label" for="device">Assign device to this system type:</label>
+                <select th:object="${device}" th:field="*{id}" id="device" class="employee-list">
+                    <option th:each="device : ${devicesToAssign}"
+                            th:value="${device.getId()}"
+                            th:text="${device.getName()}"></option>
+                </select>
+                <label class="info-label" for="quantity">Enter quantity</label>
+                <input name="quantity" type="text" id="quantity" class="info-value"/>
+                <div class="actions">
+                    <input type="submit" value="Assign Office" class="action-button"/>
+                </div>
+            </form>
+        </div>
+    </div>
 
+    <div class="info-section">
+        <h3 class="section-title">Delete Device</h3>
+        <form class="actions" th:method="PATCH" th:action="@{/devices/{id_system_type}/{id_office}/delete_device(id_system_type=${systemType.getId()},
+        id_office=${office.id})}">
+            <label class="info-label" for="device">Delete device in this system type:</label>
+            <select th:object="${device}" th:field="*{id}" id="deviceDel" class="employee-list">
+                <option th:each="device : ${assignedDevices}"
+                        th:value="${device.getId()}"
+                        th:text="${device.getName()}"></option>
+            </select>
+            <div class="actions">
+                <input type="submit" value="Delete Device" class="action-button delete-button"/>
+            </div>
+        </form>
+    </div>
+
+</div>
 </body>
 </html>
+
+
+
+<!--
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit System type</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+</head>
+<body>
+<div class="container container-small">
+    <h3 class="teal-text text-darken-2">Name: <span th:text="${systemType.getName()}"></span></h3>
+    <p class="teal-text text-darken-2">Name: <span th:text="${office.getName()}"></span></p>
+
+    <div class="info-section">
+        <h3 class="section-title">Existing Devices and Quantities</h3>
+        <table class="striped">
+            <thead>
+            <tr>
+                <th>Device</th>
+                <th>Quantity</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="deviceOffice : ${deviceOffice}" class="employee-item">
+                <td th:text="${deviceOffice.device.name}"></td>
+                <td th:text="${deviceOffice.quantity}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="info-section">
+        <h3 class="section-title">Update Device Quantity</h3>
+        <form class="col s12" th:method="PATCH" th:action="@{/devices/{id_system_type}/{id_office}/set_quantity(id_system_type=${systemType.getId()}, id_office=${office.id})}">
+            <div class="input-field">
+                <select th:object="${device}" th:field="*{id}" class="browser-default">
+                    <option th:each="deviceOffice : ${deviceOffice}" th:value="${deviceOffice.device.id}" th:text="${deviceOffice.device.name}"></option>
+                </select>
+            </div>
+            <div class="input-field">
+                <input id="setQuantity" type="text" class="validate" name="setQuantity">
+                <label for="setQuantity">Enter quantity</label>
+            </div>
+            <button class="btn waves-effect waves-light" type="submit">Update Quantity</button>
+        </form>
+    </div>
+
+    <div class="info-section">
+        <h3 class="section-title">Assign Device</h3>
+        <div th:if="${devicesToAssign}">
+            <form class="col s12" th:method="PATCH" th:action="@{/devices/{id_system_type}/{id_office}/assign(id_system_type=${systemType.getId()}, id_office=${office.id})}">
+                <div class="input-field">
+                    <select th:object="${device}" th:field="*{id}" class="browser-default">
+                        <option th:each="device : ${devicesToAssign}" th:value="${device.getId()}" th:text="${device.getName()}"></option>
+                    </select>
+                </div>
+                <div class="input-field">
+                    <input id="quantity" type="text" class="validate" name="quantity">
+                    <label for="quantity">Enter quantity</label>
+                </div>
+                <button class="btn waves-effect waves-light" type="submit">Assign Office</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="info-section">
+        <h3 class="section-title">Delete Device</h3>
+        <form class="col s12" th:method="PATCH" th:action="@{/devices/{id_system_type}/{id_office}/delete_device(id_systemType=${systemType.getId()}, id_office=${office.id})}">
+            <div class="input-field">
+                <select th:object="${device}" th:field="*{id}" class="browser-default">
+                    <option th:each="device : ${assignedDevices}" th:value="${device.getId()}" th:text="${device.getName()}"></option>
+                </select>
+            </div>
+            <button class="btn waves-effect waves-light delete-button" type="submit">Delete Device</button>
+        </form>
+    </div>
+
+    <a href="@{/offices/{id}(id=${office.getId()})}" class="return-link">Back</a><br>
+    <a href="@{/offices}" class="return-link">To Office List</a><br>
+    <a href="@{/}" class="return-link">Home</a>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script>
+    M.AutoInit(); // Initialize Materialize components
+</script>
+</body>
+</html>
+-->
+
+<!--
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit System type</title>
+
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container-sm">
+    <h3 class="page-title">
+        <span th:text="${'Name: ' + systemType.getName()}">System type</span>
+    </h3>
+    <p class="page-title" th:text="${'Name: ' + office.getName()}">office</p>
+
+    <div class="info-section">
+        <h3 class="section-title">Existing Devices and Quantities</h3>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Device</th>
+                <th>Quantity</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="deviceOffice : ${deviceOffice}" class="employee-item">
+                <td th:text="${deviceOffice.device.name}"></td>
+                <td th:text="${deviceOffice.quantity}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="info-section">
+        <h3 class="section-title">Update Device Quantity</h3>
+        <form th:method="PATCH" th:action="@{/devices/{id_system_type}/{id_office}/set_quantity(id_system_type=${systemType.getId()}, id_office=${office.id})}">
+            <div class="mb-3">
+                <select th:object="${device}" th:field="*{id}" class="form-select">
+                    <option th:each="deviceOffice : ${deviceOffice}" th:value="${deviceOffice.device.id}" th:text="${deviceOffice.device.name}"></option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="setQuantity" class="form-label">Enter quantity</label>
+                <input name="setQuantity" type="text" id="setQuantity" class="form-control"/>
+            </div>
+            <button class="btn btn-primary" type="submit">Update Quantity</button>
+        </form>
+    </div>
+
+    <div class="info-section">
+        <h3 class="section-title">Assign Device</h3>
+        <div th:if="${devicesToAssign}">
+            <form th:method="PATCH" th:action="@{/devices/{id_system_type}/{id_office}/assign(id_system_type=${systemType.getId()}, id_office=${office.id})}">
+                <div class="mb-3">
+                    <select th:object="${device}" th:field="*{id}" class="form-select">
+                        <option th:each="device : ${devicesToAssign}" th:value="${device.getId()}" th:text="${device.getName()}"></option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="quantity" class="form-label">Enter quantity</label>
+                    <input name="quantity" type="text" id="quantity" class="form-control"/>
+                </div>
+                <button class="btn btn-primary" type="submit">Assign Office</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="info-section">
+        <h3 class="section-title">Delete Device</h3>
+        <form th:method="PATCH" th:action="@{/devices/{id_system_type}/{id_office}/delete_device(id_system_type=${systemType.getId()},
+        id_office=${office.id})}">
+            <div class="mb-3">
+                <select th:object="${device}" th:field="*{id}" class="form-select">
+                    <option th:each="device : ${assignedDevices}" th:value="${device.getId()}" th:text="${device.getName()}"></option>
+                </select>
+            </div>
+            <button class="btn btn-danger delete-button" type="submit">Delete Device</button>
+        </form>
+    </div>
+
+    <a th:href="@{/offices/{id}(id=${office.getId()})}" class="btn btn-primary return-link">Back</a><br>
+    <a th:href="@{/offices}" class="btn btn-secondary return-link">To Office List</a><br>
+    <a th:href="@{/}" class="btn btn-secondary return-link">Home</a>
+</div>
+
+<script src="/js/bootstrap.min.js"></script>
+</body>
+</html>
+-->
+
