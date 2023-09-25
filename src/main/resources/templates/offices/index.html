@@ -2,18 +2,29 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Offices</title>
+    <link rel="stylesheet" th:href="@{/css/nav.css}">
 </head>
 <body>
-<div th:each="office : ${offices}">
-    <a th:href="@{/offices/{id}(id=${office.getId()})}"
-       th:text="${office.getName()}">office</a>
+
+<div class="container">
+    <h2 class="page-title">Offices</h2>
+    <a href="/offices/sorted_by_name?order=asc">Sort by name &#8593;</a>
+    <a href="/offices/sorted_by_name?order=desc">Sort by name &#8595;</a>
+    <ul class="nav-list">
+        <li th:each="office : ${offices}">
+            <a th:href="@{/offices/{id}(id=${office.getId()})}" th:text="${office.getName()}">Office</a>
+        </li>
+    </ul>
+
+    <hr/>
+
+    <div class="button-group">
+        <a href="/offices/new" class="logout-button">Create New Office</a>
+        <a th:href="@{/}" class="logout-button">Home</a>
+    </div>
 </div>
 
-<br/>
-<hr/>
-<a href="/offices/new">Create new office</a>
-<br/>
-<a th:href="@{/}">Home</a>
 </body>
 </html>
