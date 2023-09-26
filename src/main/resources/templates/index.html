@@ -1,3 +1,4 @@
+<!--
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,6 +24,35 @@
 <form th:action="@{/logout}" method="post">
     <input type="submit" value="Logout"/>
 </form>
+
+</body>
+</html>
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library</title>
+    <link rel="stylesheet" th:href="@{/css/nav.css}">
+</head>
+<body>
+
+<div class="container">
+    <h2 class="page-title">Maintenance management</h2>
+    <ul class="nav-list">
+        <li><a href="/people">All People</a></li>
+        <li><a href="/books">All Books</a></li>
+        <li><a href="/employees">All Employees</a></li>
+        <li><a href="/offices">All Offices</a></li>
+        <li><a href="/devices">All Devices</a></li>
+        <li><a href="/system_types">All System Types</a></li>
+    </ul>
+
+    <form th:action="@{/logout}" method="post">
+        <input type="submit" class="logout-button" value="Logout"/>
+    </form>
+</div>
 
 </body>
 </html>
