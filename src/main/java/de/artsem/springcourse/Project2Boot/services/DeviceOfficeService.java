@@ -56,4 +56,17 @@ public class DeviceOfficeService {
     }
 
 
+    @Transactional
+    public void deleteDeviceFromOfficeAndSystemType(int officeId, int systemTypeId, int deviceId) {
+            Optional<Office> optionalOffice = officesRepository.findById(officeId);
+            Optional<Device> optionalDevice = devicesRepository.findById(deviceId);
+            Optional<SystemType> optionalSystemType = systemTypesRepository.findById(systemTypeId);
+            if (optionalDevice.isPresent() && optionalOffice.isPresent() && optionalSystemType.isPresent()){
+                DeviceOffice deviceOffice = deviceOfficeRepository
+                        .findByOfficeAndDeviceAndSystemType(optionalOffice.get(),
+                                optionalDevice.get(), optionalSystemType.get());
+                deviceOfficeRepository.delete(deviceOffice);
+            }
+    }
+
 }
