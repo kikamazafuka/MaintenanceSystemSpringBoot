@@ -73,12 +73,14 @@ public class DevicesController {
         return "redirect:/devices";
     }
 
-    @PatchMapping("/{id}/assign")
-    public String assignToOffice(@PathVariable("id") int id, @ModelAttribute("device") Device device,
+    @PatchMapping("/{id_system_type}/{id_office}/assign")
+    public String assignToOffice(@PathVariable("id_office") int officeId,
+                                 @PathVariable("id_system_type") int systemTypeId,
+                                 @ModelAttribute("device") Device device,
                                  @RequestParam(required = false, name = "quantity") int quantity){
-        deviceService.assign(id, device.getId(), quantity);
+        deviceService.assign(officeId, device.getId(), systemTypeId, quantity);
         //TODO validate for existing office in current employee entity
-        return "redirect:/offices/"+id;
+        return "redirect:/system_types/"+systemTypeId+"/"+officeId+"/edit";
     }
 
     @PatchMapping("/{id_system_type}/{id_office}/set_quantity")
@@ -96,5 +98,13 @@ public class DevicesController {
                                @ModelAttribute ("systemType")SystemType systemType){
         deviceService.delete(device.getId(), id, systemType.getId());
         return "redirect:/offices/"+id;
+    }
+
+    @PatchMapping("/{id_system_type}/{id_office}/delete_device")
+    public String deleteDeviceFromOfficeAndSystemType(@PathVariable("id_system_type") int systemTypeId,
+                                                      @PathVariable("id_office") int officeId,
+                                                      @ModelAttribute("device") Device device){
+        deviceOfficeService.deleteDeviceFromOfficeAndSystemType(officeId, systemTypeId, device.getId());
+        return "redirect:/system_types/"+systemTypeId+"/"+officeId+"/edit";
     }
 }
