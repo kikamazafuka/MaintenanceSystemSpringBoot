@@ -4,6 +4,7 @@ import de.artsem.springcourse.Project2Boot.models.DeviceOffice;
 import de.artsem.springcourse.Project2Boot.models.Employee;
 import de.artsem.springcourse.Project2Boot.models.Office;
 import de.artsem.springcourse.Project2Boot.repositories.OfficesRepository;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,6 +23,13 @@ public class OfficesService {
 
     public List<Office> findAll() {
         return officesRepository.findAll();
+    }
+
+    public List<Office> findAllOfficesWithSorting(String sortingField, String order) {
+        if (order.equals("asc")){
+            return officesRepository.findAll(Sort.by(Sort.Direction.ASC, sortingField));
+        }
+        return officesRepository.findAll(Sort.by(Sort.Direction.DESC, sortingField));
     }
 
     @Transactional
@@ -56,5 +64,4 @@ public class OfficesService {
         }
         return new ArrayList<>();
     }
-
 }
