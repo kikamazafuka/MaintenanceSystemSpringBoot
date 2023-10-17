@@ -5,7 +5,6 @@ import de.artsem.springcourse.Project2Boot.services.DevicesService;
 import de.artsem.springcourse.Project2Boot.services.OfficesService;
 import de.artsem.springcourse.Project2Boot.services.SystemTypesService;
 import jakarta.validation.Valid;
-import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;

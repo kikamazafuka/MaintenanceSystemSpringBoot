@@ -15,8 +15,10 @@ public class Office {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private int id;
-    @Column(name = "name")
+    @Column(name = "name",
+            updatable = false)
     @NotEmpty(message = "Name shouldn't be empty")
     private String name;
 
