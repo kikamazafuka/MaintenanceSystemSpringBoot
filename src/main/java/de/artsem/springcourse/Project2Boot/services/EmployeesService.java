@@ -30,7 +30,7 @@ public class EmployeesService {
 
     public Employee findById(int id) {
         Optional<Employee> foundEmployee = employeesRepository.findById(id);
-        return foundEmployee.orElse(null);
+        return foundEmployee.orElse(new Employee());
     }
 
     @Transactional
@@ -74,5 +74,9 @@ public class EmployeesService {
         Employee employee = employeesRepository.findById(employeeId).get();
         Office office = officesRepository.findById(officeId).get();
         employee.getOfficeList().remove(office);
+    }
+
+    public List<Employee> findAllByNameStartingWith(String startingChar) {
+       return  employeesRepository.findAllByNameStartingWith(startingChar);
     }
 }
