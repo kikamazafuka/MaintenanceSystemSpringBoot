@@ -1,5 +1,6 @@
 package de.artsem.springcourse.Project2Boot.controllers;
 
+import de.artsem.springcourse.Project2Boot.models.Book;
 import de.artsem.springcourse.Project2Boot.models.Employee;
 import de.artsem.springcourse.Project2Boot.models.Office;
 import de.artsem.springcourse.Project2Boot.services.EmployeeOfficeJoinEntityService;
@@ -98,5 +99,22 @@ public class EmployeesController {
     public String deleteOffice(@PathVariable("id") int id, @ModelAttribute("office") Office office){
         employeesService.delete(id, office.getId());
         return "redirect:/employees/"+id;
+    }
+
+    @PostMapping("/searchResult")
+    public String searchPost(@RequestParam String startWith,
+                             Model model){
+
+        List<Employee> foundEmployee = employeesService.findAllByNameStartingWith(startWith);
+        boolean check = false;
+        if (foundEmployee.isEmpty()){
+            System.out.println("EMPTY LIST; NOT FOUND");
+            check=true;
+            model.addAttribute("check", check);
+        } else {
+            model.addAttribute("foundEmployee", foundEmployee);
+        }
+        return "employees/searchResult";
+
     }
 }
