@@ -11,12 +11,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Logger;
 
 @Service
 @Transactional(readOnly = true)
 public class EmployeesService {
     private final EmployeesRepository employeesRepository;
     private final OfficesRepository officesRepository;
+    Logger logger = Logger.getLogger(EmployeesService.class.getName());
 
     @Autowired
     public EmployeesService(EmployeesRepository employeesRepository, OfficesRepository officesRepository) {
@@ -29,6 +31,7 @@ public class EmployeesService {
     }
 
     public Employee findById(int id) {
+        logger.info("EmployeesService find by id = " + id);
         Optional<Employee> foundEmployee = employeesRepository.findById(id);
         return foundEmployee.orElse(new Employee());
     }
